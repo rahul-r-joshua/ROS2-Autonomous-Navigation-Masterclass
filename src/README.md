@@ -1,4 +1,4 @@
-# 🤖 -ROS2-Autonomous-Navigation-Masterclass
+# 🤖 ROS2-Autonomous-Navigation-Masterclass
 > **Production-Grade, Industrial Multi-Milestone Architecture, 2D SLAM, AMCL Localization, Custom Path Planning, Pure Pursuit Motion Control, Nav2 Integration, and Real Hardware Deployment on Raspberry Pi**
 
 ---
@@ -72,26 +72,34 @@ Welcome to the **ROS 2 Mobile Robotics & Autonomous Navigation Masterclass Works
 <a id="workspace-prerequisites" name="workspace-prerequisites"></a>
 ## 🚀 Workspace Prerequisites & Environment Setup
 
-Before starting Milestone 1, initialize your workspace using either Option A (if you completed Level 2 `ros2_mobile_robot_ws`) or Option B (cloning from repository).
+This Masterclass builds directly upon the 4-wheel mobile robot kinematics, simulation URDF, and hardware stack established in **Level 2**. 
 
-### Option A: Migrating from `ros2_mobile_robot_ws` (Existing Level 2 Workspace)
-If you already have your Level 2 mobile robot workspace, copy the base packages into your Level 3 autonomous navigation workspace:
+* **Required Level 2 Prerequisite Stack**: [https://github.com/rahul-r-joshua/ROS2-Mobile-Robot-Masterclass](https://github.com/rahul-r-joshua/ROS2-Mobile-Robot-Masterclass)
+
+Before starting Milestone 1, initialize your Level 3 workspace using either **Option A** (migrating/cloning your Level 2 base packages) or **Option B** (cloning the complete Level 3 repository).
+
+### Option A: Migrating from `ROS2-Mobile-Robot-Masterclass` (Level 2 Prerequisite)
+If you already completed Level 2 or want to clone the prerequisite mobile robot stack, copy the 4 base foundation packages (`mobile_robot_description`, `mobile_robot_controller`, `mobile_robot_firmware`, `mobile_robot_bringup`) into your Level 3 workspace:
 
 ```bash
+# 1. Clone prerequisite Level 2 Mobile Robot Masterclass (if not already local)
+git clone https://github.com/rahul-r-joshua/ROS2-Mobile-Robot-Masterclass.git ~/ros2_mobile_robot_ws
+
+# 2. Copy foundation packages into your Level 3 workspace
 mkdir -p ~/ros2_autonomous_navigation_ws/src
-cp -r ~/ros2_mobile_robot_ws/src/* ~/ros2_autonomous_navigation_ws/src/
+cp -r ~/ros2_mobile_robot_ws/src/mobile_robot_* ~/ros2_autonomous_navigation_ws/src/
+
+# 3. Build Level 3 workspace
 cd ~/ros2_autonomous_navigation_ws
 source /opt/ros/humble/setup.bash
 colcon build --symlink-install
 ```
 
 ### Option B: Fresh Workspace Initialization via Git Clone
-If starting clean, clone the complete repository and install all required ROS 2 Humble dependencies:
+If starting clean with all 11 turnkey milestones pre-packaged, clone the complete Level 3 repository:
 
 ```bash
-mkdir -p ~/ros2_autonomous_navigation_ws/src
-cd ~/ros2_autonomous_navigation_ws/src
-git clone https://github.com/rahul-r-joshua/ros2_autonomous_navigation_ws.git .
+git clone https://github.com/rahul-r-joshua/ROS2-Autonomous-Navigation-Masterclass.git ~/ros2_autonomous_navigation_ws
 cd ~/ros2_autonomous_navigation_ws
 source /opt/ros/humble/setup.bash
 sudo apt-get update
@@ -12981,8 +12989,8 @@ This master troubleshooting guide addresses the most common real-world errors, r
   ```
   If missing, download the official pairs:
   ```bash
-  curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/-ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/maze_map.yaml -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/maze_map.yaml
-  curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/-ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/maze_map.pgm -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/maze_map.pgm
+  curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/maze_map.yaml -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/maze_map.yaml
+  curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/maze_map.pgm -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/maze_map.pgm
   ```
 
 ---

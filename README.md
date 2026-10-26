@@ -1,4 +1,4 @@
-# 🤖 -ROS2-Autonomous-Navigation-Masterclass
+# 🤖 ROS2-Autonomous-Navigation-Masterclass
 
 > A complete, production-grade ROS 2 Humble curriculum and 4-wheel autonomous mobile robot (AMR) navigation capstone system, engineered side-by-side in both Python (`rclpy`) and Modern C++ (`rclcpp`). Features full Nav2 integration, custom C++ pluginlib Global Planners (A\* & Dijkstra), custom C++ Local Controllers (Pure Pursuit & PD Motion), multi-sensor EKF fusion (Wheel Odometry, 6-DOF IMU, 2D LiDAR), AMCL probabilistic localization, 3 Gazebo simulation environments (`nav_challenge`, `maze_world`, `obstacle_world`), active LiDAR safety zones, velocity multiplexing (`twist_mux`), programmatic autonomous missions, and physical Raspberry Pi hardware deployment.
 
@@ -12,7 +12,7 @@
 
 ```bash
 # 1. Clone & enter workspace
-git clone https://github.com/rahul-r-joshua/-ROS2-Autonomous-Navigation-Masterclass.git ~/ros2_autonomous_navigation_ws && cd ~/ros2_autonomous_navigation_ws
+git clone https://github.com/rahul-r-joshua/ROS2-Autonomous-Navigation-Masterclass.git ~/ros2_autonomous_navigation_ws && cd ~/ros2_autonomous_navigation_ws
 
 # 2. Install dependencies & configure environment
 bash Scripts/install_dependencies.sh && source Scripts/setup_environment.sh
@@ -113,6 +113,7 @@ ros2_autonomous_navigation_ws/
 
 ## <a id="prerequisites" name="prerequisites"></a>📋 Prerequisites
 
+* 🤖 **Foundation Workspace (Level 2 Prerequisite)**: [ROS2-Mobile-Robot-Masterclass](https://github.com/rahul-r-joshua/ROS2-Mobile-Robot-Masterclass)
 * 🐧 **OS**: Ubuntu 22.04 LTS (Jammy Jellyfish)
 * 🌐 **ROS 2**: Humble Hawksbill (`ros-humble-desktop`)
 * 🐍 **Python**: 3.10+ (`transforms3d`, `pyserial`, `numpy`)
@@ -127,7 +128,7 @@ ros2_autonomous_navigation_ws/
 
 ### 1️⃣ Clone Workspace:
 ```bash
-git clone https://github.com/rahul-r-joshua/-ROS2-Autonomous-Navigation-Masterclass.git ~/ros2_autonomous_navigation_ws
+git clone https://github.com/rahul-r-joshua/ROS2-Autonomous-Navigation-Masterclass.git ~/ros2_autonomous_navigation_ws
 cd ~/ros2_autonomous_navigation_ws
 ```
 
@@ -309,16 +310,16 @@ If skipping manual teleoperation mapping, download all 3 pre-built production ma
 mkdir -p ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps
 
 # Download Navigation Challenge Map Pair
-curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/-ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/nav_challenge_map.yaml -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/nav_challenge_map.yaml
-curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/-ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/nav_challenge_map.pgm -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/nav_challenge_map.pgm
+curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/nav_challenge_map.yaml -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/nav_challenge_map.yaml
+curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/nav_challenge_map.pgm -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/nav_challenge_map.pgm
 
 # Download Maze Map Pair
-curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/-ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/maze_map.yaml -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/maze_map.yaml
-curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/-ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/maze_map.pgm -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/maze_map.pgm
+curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/maze_map.yaml -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/maze_map.yaml
+curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/maze_map.pgm -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/maze_map.pgm
 
 # Download Obstacle Map Pair
-curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/-ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/obstacle_map.yaml -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/obstacle_map.yaml
-curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/-ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/obstacle_map.pgm -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/obstacle_map.pgm
+curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/obstacle_map.yaml -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/obstacle_map.yaml
+curl -fsSL https://raw.githubusercontent.com/rahul-r-joshua/ROS2-Autonomous-Navigation-Masterclass/main/src/mobile_robot_mapping/maps/obstacle_map.pgm -o ~/ros2_autonomous_navigation_ws/src/mobile_robot_mapping/maps/obstacle_map.pgm
 ```
 
 ---
