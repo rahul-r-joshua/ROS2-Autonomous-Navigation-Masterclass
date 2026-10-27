@@ -560,7 +560,42 @@ Visualization Manager:
       Value: TopDownOrtho (rviz_default_plugins)
       X: 0
       Y: 0
-    Saved: ~
+    Saved:
+      - Angle: -1.5707999467849731
+        Class: rviz_default_plugins/TopDownOrtho
+        Invert Z Axis: false
+        Name: Gazebo Forward (UP)
+        Near Clip Distance: 0.01
+        Scale: 160
+        Target Frame: <Fixed Frame>
+        Value: TopDownOrtho (rviz_default_plugins)
+        X: 0
+        Y: 0
+      - Angle: 0.0
+        Class: rviz_default_plugins/TopDownOrtho
+        Invert Z Axis: false
+        Name: Map North (UP)
+        Near Clip Distance: 0.01
+        Scale: 160
+        Target Frame: <Fixed Frame>
+        Value: TopDownOrtho (rviz_default_plugins)
+        X: 0
+        Y: 0
+      - Class: rviz_default_plugins/Orbit
+        Distance: 13.0
+        Focal Point:
+          X: 0
+          Y: 0
+          Z: 0
+        Focal Shape Fixed Size: true
+        Focal Shape Size: 0.05
+        Invert Z Axis: false
+        Name: 3D Forward UP (Perspective)
+        Near Clip Distance: 0.01
+        Pitch: 0.785398
+        Target Frame: <Fixed Frame>
+        Value: Orbit (rviz)
+        Yaw: 3.14159
 Window Geometry:
   Camera Image:
     collapsed: false

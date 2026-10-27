@@ -4122,40 +4122,48 @@ source install/setup.bash
 
 ### 🚀 Method A: C++ Localization Stack (All C++)
 
-#### Terminal 1 — Gazebo Classic Simulation (C++ ros2_control & C++ Safety Zone)
-* **Option A1: Navigation Challenge World**
+#### 🗺️ World & AMCL Localization Pairings:
+
+##### 🔷 World Option A: Navigation Challenge World (Default)
+* **Terminal 1 — Option A1: Gazebo Classic Simulation (Navigation Challenge World)**
   ```bash
   source /opt/ros/humble/setup.bash
   source ~/ros2_autonomous_navigation_ws/install/setup.bash
   ros2 launch mobile_robot_bringup simulate_robot.launch.py world:=nav_challenge controller:=ros2_control safety_zone:=cpp
   ```
-* **Option A2: Maze World**
-  ```bash
-  source /opt/ros/humble/setup.bash
-  source ~/ros2_autonomous_navigation_ws/install/setup.bash
-  ros2 launch mobile_robot_bringup simulate_robot.launch.py world:=maze_world controller:=ros2_control safety_zone:=cpp
-  ```
-* **Option A3: Obstacle World**
-  ```bash
-  source /opt/ros/humble/setup.bash
-  source ~/ros2_autonomous_navigation_ws/install/setup.bash
-  ros2 launch mobile_robot_bringup simulate_robot.launch.py world:=obstacle_world controller:=ros2_control safety_zone:=cpp
-  ```
-
-#### Terminal 2 — Launch C++ AMCL Global Localization
-* **Option 2A: Launch AMCL for Navigation Challenge Map**
+* **Terminal 2 — Option 2A: Launch AMCL for Navigation Challenge Map**
   ```bash
   source /opt/ros/humble/setup.bash
   source ~/ros2_autonomous_navigation_ws/install/setup.bash
   ros2 launch mobile_robot_localization global_localization.launch.py map:=$(ros2 pkg prefix mobile_robot_mapping --share)/maps/nav_challenge_map.yaml use_sim_time:=true
   ```
-* **Option 2B: Launch AMCL for Maze Map**
+
+---
+
+##### 🔷 World Option B: Maze World
+* **Terminal 1 — Option A2: Gazebo Classic Simulation (Maze World)**
+  ```bash
+  source /opt/ros/humble/setup.bash
+  source ~/ros2_autonomous_navigation_ws/install/setup.bash
+  ros2 launch mobile_robot_bringup simulate_robot.launch.py world:=maze_world controller:=ros2_control safety_zone:=cpp
+  ```
+* **Terminal 2 — Option 2B: Launch AMCL for Maze Map**
   ```bash
   source /opt/ros/humble/setup.bash
   source ~/ros2_autonomous_navigation_ws/install/setup.bash
   ros2 launch mobile_robot_localization global_localization.launch.py map:=$(ros2 pkg prefix mobile_robot_mapping --share)/maps/maze_map.yaml use_sim_time:=true
   ```
-* **Option 2C: Launch AMCL for Obstacle Map**
+
+---
+
+##### 🔷 World Option C: Obstacle World
+* **Terminal 1 — Option A3: Gazebo Classic Simulation (Obstacle World)**
+  ```bash
+  source /opt/ros/humble/setup.bash
+  source ~/ros2_autonomous_navigation_ws/install/setup.bash
+  ros2 launch mobile_robot_bringup simulate_robot.launch.py world:=obstacle_world controller:=ros2_control safety_zone:=cpp
+  ```
+* **Terminal 2 — Option 2C: Launch AMCL for Obstacle Map**
   ```bash
   source /opt/ros/humble/setup.bash
   source ~/ros2_autonomous_navigation_ws/install/setup.bash
@@ -10590,54 +10598,66 @@ In Milestone 9, we verify the decoupled Nav2 pipeline across 4 modular terminals
 >
 > *(Alternatively, if simulation is launched with `use_rviz:=false`, you can launch the visualizer in a dedicated terminal via: `ros2 launch mobile_robot_navigation rviz.launch.py`)*.
 
-##### Terminal 1 — Option 1A: Simulation Bringup for Navigation Challenge World
+> [!NOTE]
+> **RViz2 "Fixed Frame [map]" Warning After Launching Terminal 1**:
+> When you launch Terminal 1 (`simulate_robot.launch.py`), RViz2 opens and may initially display:
+> * `Global Status: Error - Fixed Frame [map] does not exist`
+> * `No transform from [base_footprint] to [map]`
+> 
+> **Why this happens**: RViz2 has its Fixed Frame configured to `map`. In Terminal 1, only the simulation physics and robot description are running; no map is published yet because the map server and localization nodes reside in Terminal 2.
+>
+> **What to do**: **Simply ignore this warning!** Do not close RViz or alter the Fixed Frame. Proceed directly to **Terminal 2** and launch the matching localization node. Once Terminal 2 is active, `map_server` starts publishing `/map` and AMCL begins publishing the `map -> odom` transform — the error will immediately vanish and the map will render cleanly on screen!
+
+---
+
+#### 🗺️ World & AMCL Localization Pairings (Choose your world):
+
+##### 🔷 World Option A: Navigation Challenge World (Default)
+
+* **Terminal 1 — Option 1A: Simulation Bringup for Navigation Challenge World**:
 ```bash
 source /opt/ros/humble/setup.bash
 source ~/ros2_autonomous_navigation_ws/install/setup.bash
 ros2 launch mobile_robot_bringup simulate_robot.launch.py world:=nav_challenge safety_zone:=py rviz_config:=navigation
 ```
 
-##### Terminal 1 — Option 1B: Simulation Bringup for Maze World
-```bash
-source /opt/ros/humble/setup.bash
-source ~/ros2_autonomous_navigation_ws/install/setup.bash
-ros2 launch mobile_robot_bringup simulate_robot.launch.py world:=maze_world safety_zone:=py rviz_config:=navigation
-```
-
-##### Terminal 1 — Option 1C: Simulation Bringup for Obstacle World
-```bash
-source /opt/ros/humble/setup.bash
-source ~/ros2_autonomous_navigation_ws/install/setup.bash
-ros2 launch mobile_robot_bringup simulate_robot.launch.py world:=obstacle_world safety_zone:=py rviz_config:=navigation
-```
-
-> [!NOTE]
-> **RViz2 "Fixed Frame [map]" Warning After Launching Terminal 1**:
-> When you launch Terminal 1 (`ros2 launch mobile_robot_bringup simulate_robot.launch.py world:=obstacle_world safety_zone:=py` or any other world), RViz2 opens and may continuously display an error or warning in the left Displays panel:
-> * `Global Status: Error - Fixed Frame [map] does not exist`
-> * `No transform from [base_footprint] to [map]`
-> 
-> **Why this happens**: RViz2 has its Fixed Frame configured to `map`. In Terminal 1, only the simulation physics and robot description are running; no map is published yet because the map server and localization nodes reside in Terminal 2.
->
-> **What to do**: **Simply ignore this warning!** Do not close RViz or alter the Fixed Frame. Proceed directly to **Terminal 2** and launch the localization node (`ros2 launch mobile_robot_localization global_localization.launch.py map:=$(ros2 pkg prefix mobile_robot_mapping --share)/maps/obstacle_map.yaml use_sim_time:=true`). Once Terminal 2 is active, `map_server` starts publishing `/map` and AMCL begins publishing the `map -> odom` transform — the error will immediately vanish and the map will load and render cleanly on screen!
-
----
-
-##### Terminal 2 — Option 2A: AMCL Localization for Navigation Challenge Map
+* **Terminal 2 — Option 2A: AMCL Localization for Navigation Challenge Map**:
 ```bash
 source /opt/ros/humble/setup.bash
 source ~/ros2_autonomous_navigation_ws/install/setup.bash
 ros2 launch mobile_robot_localization global_localization.launch.py map:=$(ros2 pkg prefix mobile_robot_mapping --share)/maps/nav_challenge_map.yaml use_sim_time:=true
 ```
 
-##### Terminal 2 — Option 2B: AMCL Localization for Maze Map
+---
+
+##### 🔷 World Option B: Maze World
+
+* **Terminal 1 — Option 1B: Simulation Bringup for Maze World**:
+```bash
+source /opt/ros/humble/setup.bash
+source ~/ros2_autonomous_navigation_ws/install/setup.bash
+ros2 launch mobile_robot_bringup simulate_robot.launch.py world:=maze_world safety_zone:=py rviz_config:=navigation
+```
+
+* **Terminal 2 — Option 2B: AMCL Localization for Maze Map**:
 ```bash
 source /opt/ros/humble/setup.bash
 source ~/ros2_autonomous_navigation_ws/install/setup.bash
 ros2 launch mobile_robot_localization global_localization.launch.py map:=$(ros2 pkg prefix mobile_robot_mapping --share)/maps/maze_map.yaml use_sim_time:=true
 ```
 
-##### Terminal 2 — Option 2C: AMCL Localization for Obstacle Map
+---
+
+##### 🔷 World Option C: Obstacle World
+
+* **Terminal 1 — Option 1C: Simulation Bringup for Obstacle World**:
+```bash
+source /opt/ros/humble/setup.bash
+source ~/ros2_autonomous_navigation_ws/install/setup.bash
+ros2 launch mobile_robot_bringup simulate_robot.launch.py world:=obstacle_world safety_zone:=py rviz_config:=navigation
+```
+
+* **Terminal 2 — Option 2C: AMCL Localization for Obstacle Map**:
 ```bash
 source /opt/ros/humble/setup.bash
 source ~/ros2_autonomous_navigation_ws/install/setup.bash
@@ -12434,6 +12454,18 @@ Mismatched costmap updates and visualization settings can cause ghost obstacles 
 ### 4. Sim-Time Clock Synchronization (`use_sim_time: True`)
 * In `nav2_params.yaml`, enabled `use_sim_time: True` and increased `transform_tolerance: 3.0` so that TF interpolation between `map`, `odom`, and `base_footprint` never drops due to timestamp lag between Gazebo `/clock` and ROS nodes, preventing transform timeouts and orientation freezes during turns.
 
+### 5. Unified Top-Down Viewport Synchronization Across All RViz Visualizers
+* **Standardized Top View Configuration**:
+  - Unified all RViz configurations ([`navigation.rviz`](mobile_robot_navigation/rviz/navigation.rviz), [`planning.rviz`](mobile_robot_planning/rviz/planning.rviz), [`global_localization.rviz`](mobile_robot_localization/rviz/global_localization.rviz), and [`simulation.rviz`](mobile_robot_description/rviz/simulation.rviz)) to **`TopDownOrtho`** (`Angle: -1.5708`).
+  - In this view, the robot's forward vector ($+X$) points **straight UP** on the screen, matching forward movement in Gazebo.
+  - Added quick-toggle saved views in the top-right RViz **Views** panel:
+    - **`Gazebo Forward (UP)`**: Default top-down orthographic driving perspective ($+X$ pointing UP).
+    - **`Map North (UP)`**: Standard Cartesian view (North $= +Y$ UP, East $= +X$ Right).
+    - **`3D Forward UP (Perspective)`**: 3D Orbit perspective view (`Pitch: 0.785`, `Yaw: 3.14159`).
+
+### 6. Calibrated Wheel Separation (`wheel_separation: 0.34`)
+* **Configuration**: In `src/mobile_robot_controller/config/controller_params.yaml`, calibrated the physical wheel track separation to `0.34 m` matching the 4WD chassis physical geometry.
+
 ---
 
 <a id="appendix-a" name="appendix-a"></a>
@@ -12934,6 +12966,20 @@ This master troubleshooting guide addresses the most common real-world errors, r
      ```
   3. **Option C (Tune Costmap Inflation in `nav2_params.yaml`)**:
      Ensure `inflation_radius: 0.45` and `robot_radius: 0.22` in `src/mobile_robot_navigation/config/nav2_params.yaml`.
+
+---
+
+#### Issue 1B: Robot Stutters / Crawls in Clear "Green Zone" Areas
+* **Symptoms**: While following an A* trajectory or driving in open space, the robot suddenly decelerates to a near standstill (~0.05 m/s) for 1–2 seconds before resuming full speed.
+* **Root Causes**:
+  1. **Pure Pursuit Turn-in-Place Threshold**: In `pure_pursuit.py`, when `abs(heading_error) > 0.60 rad`, linear speed drops to `0.05 m/s` to prioritize in-place rotation before accelerating forward.
+  2. **Topic Contention on `/cmd_vel`**: Active `safety_zone_controller` and path tracking nodes simultaneously publishing to `/cmd_vel` causing velocity interleaving.
+* **Detailed Diagnosis & Step-by-Step Fixes**:
+  1. **Option A (Remap to Raw Cmd Vel)**: Remap the teleop / tracking node to publish directly to `/cmd_vel_raw`, allowing the priority multiplexer (`twist_mux`) to arbitrate control smoothly without topic collisions.
+  2. **Option B (Dynamically Bypass Safety Zone)**: Toggle safety zone filtering off during dedicated trajectory tracking:
+     ```bash
+     ros2 topic pub /safety_zone_enable std_msgs/msg/Bool "data: false" --once
+     ```
 
 ---
 
